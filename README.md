@@ -19,4 +19,4 @@ Os dados foram obtivos em formato CSV no site kaggle[https://www.kaggle.com/data
 
 ## Dashboard
 
-Utilização de Grafana para geração das dashboards
+Utilização de Grafana para geração das dashboards.
