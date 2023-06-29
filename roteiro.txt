@@ -1,0 +1,1 @@
+eliminamos 2 mil linhas do arquivo de creditos removendo as duplicatas e normalizando a tabela dos atores
