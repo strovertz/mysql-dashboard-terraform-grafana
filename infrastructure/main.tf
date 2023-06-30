@@ -25,11 +25,11 @@ resource "aws_instance" "grafana" {
     destination = "/tmp/titles.csv"
   }
   provisioner "file" {
-    source      = "./internal-scripts/userdata.csv"
-    destination = "/tmp/person.csv"
+    source      = "./internal-scripts/userdata.sh"
+    destination = "/tmp/userdata.sh"
   }
   provisioner "file" {
-    source      = "./internal-scripts/insert_data.py"
+    source      = "../automations/insert_data.py"
     destination = "/tmp/insert_data.py"
   }
   #Rodar o  script
@@ -42,13 +42,13 @@ resource "aws_instance" "grafana" {
     provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/separate_rows.py",
-      "sudo /tmp/separate_rows.py"
+      "sudo python3 /tmp/separate_rows.py"
     ]
   }
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/insert_data.py",
-      "sudo /tmp/insert_data.py"
+      "sudo python3 /tmp/insert_data.py"
     ]
   }
 
