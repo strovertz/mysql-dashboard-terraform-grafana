@@ -3,6 +3,12 @@ resource "aws_key_pair" "aws-key" {
   public_key = file(var.PUBLIC_KEY_PATH) // Path is in the variables file
 }
 
+resource "aws_volume_attachment" "ebs_att" {
+  device_name = "/dev/sdh"
+  volume_id   = var.ebs-id
+  instance_id = aws_instance.grafana.id
+}
+
 resource "aws_instance" "grafana" {
   ami                    = var.instance_ami
   instance_type          = var.instance_type
@@ -15,6 +21,10 @@ resource "aws_instance" "grafana" {
   provisioner "file" {
     source      = "../automations/separate_rows.py"
     destination = "/tmp/separate_rows.py"
+  }
+  provisioner "file" {
+    source      = "../automations/mysql-grafana.py"
+    destination = "/tmp/mysql-grafana.py"
   }
   provisioner "file" {
     source      = "../original_datasets/credits.csv"
@@ -49,6 +59,12 @@ resource "aws_instance" "grafana" {
     inline = [
       "chmod +x /tmp/insert_data.py",
       "sudo python3 /tmp/insert_data.py"
+    ]
+  }
+   provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/mysql-grafana.py",
+      "sudo python3 /tmp/mysql-grafana.py"
     ]
   }
 

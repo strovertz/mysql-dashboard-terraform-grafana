@@ -97,3 +97,10 @@ variable "os_type" {
   default = "ubuntu"
 
 }
+
+variable "ebs-id" {
+  description = "EBS ID - 10 GB"
+  type = string
+  default = "vol-0e4b7edecf39cff8f"
+  
+}
